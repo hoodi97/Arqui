@@ -57,6 +57,7 @@ public class Booth {
         matrizASP[0][0] = "A";
         matrizASP[1][0] = "S";
         matrizASP[2][0] = "P";
+        
         for(int i=1 ;i<18 ;i++){
             matrizASP[0][i] = ""+this.A.charAt(i-1);
             matrizASP[1][i] = ""+this.S.charAt(i-1);
@@ -82,33 +83,20 @@ public class Booth {
 
             if (penultimo != ultimo) {
                 if (penultimo == '0' && ultimo == '1') {
-                    P = this.Suma(P, A);
+                    P = this.sumaBinaria(P, A);
                 }
                 if (penultimo == '1' && ultimo == '0') {
-                    P = this.Suma(P, S);
+                    P = this.sumaBinaria(P, S);
                 }
             }
             P = this.desplazamiento(P);
             
-            
-            
             matriz[i][0]=""+(i+1);
-            System.out.println("aqui :"+ matriz[i][0]);
-            
-            
+
             for(int j=1;j<18;j++){
                 matriz[i][j]= ""+P.charAt(j-1);
             }
-            
-           
-            System.out.println(P);
-        }
-         System.out.println(matriz);
-        String resultado = P.substring(0,16);
-         System.out.println("\nResultado "+resultado);
-         System.out.println(multiplicando*multiplicador);
-         
-         
+        } 
     }
     
     public String binario(int numero){
@@ -118,7 +106,6 @@ public class Booth {
         while(numeroBi.length()<8){
            numeroBi= "0"+numeroBi;
         }
-        
         return numeroBi;
     }
     
@@ -129,75 +116,65 @@ public class Booth {
         return numeroBi.substring(24,32);
     }
       
-    public String completarDerecha(String binario){
-        int cont=0;
-        int condicion = binario.length()+1;
-        while(condicion > cont){
-            binario = binario+"0";
-            cont++;
+    public String completarDerecha(String numeroBinario){
+        int contador=0;
+        int condicion = numeroBinario.length()+1; //Para bit extra
+        while(condicion > contador){
+            numeroBinario = numeroBinario+"0";
+            contador++;
         }
-        return binario;
+        return numeroBinario;
     }
     
-    public String completarIzquierda(String binario){
-        int cont=0;
-        int condicion = binario.length();
-        while(condicion > cont){
-            binario = "0"+binario;
-            cont++;
+    public String completarIzquierda(String numeroBinario){
+        int contador=0;
+        int condicion = numeroBinario.length();
+        while(condicion > contador){
+            numeroBinario = "0"+numeroBinario;
+            contador++;
         }
-        binario = binario+"0";
-        return binario;
+        numeroBinario = numeroBinario+"0"; //Bit extra
+        return numeroBinario;
     }
     
-    public String Suma(String binario1, String binario2){
+    public String sumaBinaria(String binario1, String binario2){
         int comp=1;
         String binariocomp = Integer.toBinaryString(comp);
         char aux=0;
         String suma="";
         
         for (int i = 0; i <binario1.length() ; i++) {
-            //System.out.println("numeros:"+binario1.charAt(binario1.length()-1-i)+"-"+binario2.charAt(binario2.length()-1-i));
-            if (aux==0){
-                //System.out.println("sin acarreo");
+            if (aux==0){ //Si no existe acarreo
+                
                 if (binario1.charAt(binario1.length()-1-i) != binario2.charAt(binario2.length()-1-i)){
                     suma="1"+suma;
                     aux=0;
-                    //System.out.println("diferentes");
                 }else{
                     if (binario1.charAt(binario1.length()-1-i)==binariocomp.charAt(0)){
-                    suma="0"+suma;
-                    aux=1;
-                    //System.out.println("iguales (1)");      
+                        suma="0"+suma;
+                        aux=1;
                     }else{
-                    suma="0"+suma;
-                    aux=0;
-                   // System.out.println("iguales (0)");  
+                        suma="0"+suma;
+                        aux=0;
                     }
                 }
-            }else {
-               // System.out.println("con acarreo");
+            }else {    //Si existe acarreo
+               
                 if (binario1.charAt(binario1.length()-1-i) != binario2.charAt(binario2.length()-1-i)){
                     suma="0"+suma;
                     aux=1;
-                    //System.out.println("diferentes y sin acarreo");
-                    //System.out.println("diferentes");
                 }else{
                     if (binario1.charAt(binario1.length()-1-i)==binariocomp.charAt(0)){
-                    suma="1"+suma;
-                    aux=1;
-                    //System.out.println("iguales (1)"); 
+                        suma="1"+suma;
+                        aux=1;
                     }else{
-                     suma="1"+suma;
-                    aux=0;
-                    // System.out.println("iguales (0)"); 
+                        suma="1"+suma;
+                        aux=0;
                     }
                 }
-            }            
+            }
             
         }
-        //System.out.println(suma);
-        //System.out.println("\n----------------------");
         return suma;
     }
     
@@ -205,25 +182,18 @@ public class Booth {
         String desp="";
         int comp=1;
         String binariocomp = Integer.toBinaryString(comp);
-        //System.out.println(p);
         
         for (int i = 2; i <= p.length(); i++) {           
-        desp=p.charAt(p.length()-i)+desp;
+            desp=p.charAt(p.length()-i)+desp;
         }
         
-        //System.out.println("bit:"+p.charAt(0)+"comp"+comp);
-        
         if (p.charAt(0)==binariocomp.charAt(0)) {
-            //System.out.println("entra");
             desp="1"+desp;
         }else{
             desp="0"+desp;
         }
-        
-        //System.out.println(desp);
         return desp;
     }
-    
 }
 
 

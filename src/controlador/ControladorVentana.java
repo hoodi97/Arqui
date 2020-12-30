@@ -7,6 +7,7 @@ package controlador;
  
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 import modelo.Booth;
 import vista.Ventana;
 
@@ -46,35 +47,48 @@ public class ControladorVentana implements ActionListener{
         ) );
     }
     
+    public void operacion(int numero1, int numero2){
+        String multiplicandoBi;
+        String multiplicadorBi;
+        
+        multiplicandoBi=algoritmo.binario(numero1);    
+        multiplicadorBi=algoritmo.binario(numero2);
+            
+        v.textoMultiplicandoBin.setText(multiplicandoBi);
+        v.textoMultiplicadorBin.setText(multiplicadorBi);
+        v.textoMultiplicandoCom.setText(algoritmo.complemento2(numero1));
+        v.textoMultiplicadorCom.setText(algoritmo.complemento2(numero2));
+        v.textoOperacion.setText(numero1 + " * "+numero2);
+
+        algoritmo.calcular(numero1, numero2);
+        //Resultados
+        this.mostrarTablas();
+        v.textoResultadoBin.setText(algoritmo.resultadoBinario());
+        v.textoResultadoDe.setText(""+numero1*numero2);
+    }
+    
+    public void validacionNumeros(int numero1, int numero2){
+        
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         int numero1;
         int numero2;
-        String multiplicandoBi;
-        String multiplicadorBi;
-        if(e.getSource()==v.botonCalcular){
-            numero1= Integer.parseInt(v.textoMultiplicando.getText());
-            numero2= Integer.parseInt(v.textoMultiplicador.getText());
-            
-            multiplicandoBi=algoritmo.binario(numero1);
-            
-            multiplicadorBi=algoritmo.binario(numero2);
-            
-            v.textoMultiplicandoBin.setText(multiplicandoBi);
-            v.textoMultiplicadorBin.setText(multiplicadorBi);
-            v.textoMultiplicandoCom.setText(algoritmo.complemento2(numero1));
-            v.textoMultiplicadorCom.setText(algoritmo.complemento2(numero2));
-            v.textoOperacion.setText(numero1 + " * "+numero2);
+        try{
+            if(e.getSource()==v.botonCalcular){
+                numero1= Integer.parseInt(v.textoMultiplicando.getText());
+                numero2= Integer.parseInt(v.textoMultiplicador.getText());
+                this.validacionNumeros(numero1, numero2);
+                this.operacion(numero1, numero2);
+
+            }
+            if(e.getSource()==v.botonLimpiar){
+                v.limpiar();
+            }
         
-            algoritmo.calcular(numero1, numero2);
-            this.mostrarTablas();
-            v.textoResultadoBin.setText(algoritmo.resultadoBinario());
-           v.textoResultadoDe.setText(""+numero1*numero2);
+        }catch (Exception ex){
+                JOptionPane.showMessageDialog(null, "Complete los campos de multiplicando y multiplicador!");
         }
-        if(e.getSource()==v.botonLimpiar){
-            v.limpiar();
-        }
-        
     }
-    
 }

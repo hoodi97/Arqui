@@ -17,12 +17,17 @@ import vista.Ventana;
 public class mainAlgoritmoBooth {
     public static void main(String []args){
         JFrame.setDefaultLookAndFeelDecorated(true);
+        //Cambia el look and feel de la ventana
         SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.RavenSkin");
-        //SubstanceLookAndFeel.setCurrentTheme("org.jvnet.substance.theme.SubstanceSunsetTheme");
+        //Marca de agua (numeros binarios)
         SubstanceLookAndFeel.setCurrentWatermark("org.jvnet.substance.watermark.SubstanceBinaryWatermark");
-        //SubstanceLookAndFeel.setSkin("SubstanceFieldView");
+        
+        SubstanceLookAndFeel.setSkin("SubstanceFieldView");
+        
         Ventana v= new Ventana();
+        
         ControladorVentana c= new ControladorVentana(v);
+        
         c.mostrarVentana();        
     }
 }
